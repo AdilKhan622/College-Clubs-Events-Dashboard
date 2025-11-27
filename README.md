@@ -10,7 +10,7 @@ A desktop application built with **Java Swing and AWT** that helps users browse 
 - Clean, modern UI with custom panels  
 
 ## Tech Stack
-- **Java 17+**
+- **Java 24+**
 - **Swing**
 - **AWT** 
 
