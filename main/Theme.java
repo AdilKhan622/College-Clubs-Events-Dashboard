@@ -9,4 +9,6 @@ public class Theme {
 
     public final Font title_font = new Font("Muli", Font.BOLD, 24);
     public final Font text_font = new Font("Arial", Font.ITALIC, 14);
+
+    public static final int padding = 15;
 }
