@@ -2,27 +2,36 @@ package components;
 
 import java.awt.*;
 import javax.swing.*;
+import main.MainFrame;
 
 public class HeaderPanel extends JPanel {
 
     private JLabel pageTitleLabel;
 
     public HeaderPanel() {
-        setPreferredSize(new Dimension(0, 60));
-        setBackground(new Color(25, 118, 210));
-        setLayout(new BorderLayout(16, 0));
 
-        JLabel appTitleLabel = new JLabel("College Clubs & Events Dashboard");
-        appTitleLabel.setForeground(Color.WHITE);
-        appTitleLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        setPreferredSize(new Dimension(0, 60));
+
+        setBackground(MainFrame.theme.primary);
+
+        setLayout(new BorderLayout(MainFrame.theme.padding, 0));
+
+        JLabel appTitleLabel = new JLabel("Mahindra University Clubs & Events Dashboard");
+        appTitleLabel.setForeground(MainFrame.theme.text);
+        appTitleLabel.setFont(MainFrame.theme.title_font);
 
         pageTitleLabel = new JLabel("Dashboard");
-        pageTitleLabel.setForeground(Color.WHITE);
-        pageTitleLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        pageTitleLabel.setForeground(MainFrame.theme.text);
+        pageTitleLabel.setFont(MainFrame.theme.text_font);
         pageTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JButton logoutButton = new JButton("Logout");
+        JButton logoutButton = new JButton("Log out");
         logoutButton.setFocusPainted(false);
+        logoutButton.setFocusable(false);
+        logoutButton.setFont(MainFrame.theme.text_font);
+        logoutButton.setBackground(MainFrame.theme.bg);
+        logoutButton.setForeground(MainFrame.theme.text);
+        logoutButton.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
 
         add(appTitleLabel, BorderLayout.WEST);
         add(pageTitleLabel, BorderLayout.CENTER);

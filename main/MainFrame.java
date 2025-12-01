@@ -6,6 +6,7 @@ import components.HeaderPanel;
 import components.SideMenu;
 
 public class MainFrame extends JFrame {
+    public static final Theme theme = new Theme();
     public static MainFrame instance;
     public CardLayout cardLayout;
     public JPanel mainPanel;
@@ -22,15 +23,22 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
         setVisible(true);
 
+        getContentPane().setBackground(theme.bg);
+        setVisible(true);
+
         headerPanel = new HeaderPanel();
+        headerPanel.setBackground(theme.primary);
         add(headerPanel, BorderLayout.NORTH);
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
+        mainPanel.setBackground(theme.bg);
         add(mainPanel, BorderLayout.CENTER);
 
         sideMenu = new SideMenu(new Router());
+        sideMenu.setBackground(theme.bg);
         add(sideMenu, BorderLayout.WEST);
+        Router.goTo("Dashboard", "dashboard");
 
         registerPages();
     }

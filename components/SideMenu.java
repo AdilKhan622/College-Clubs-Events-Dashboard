@@ -15,7 +15,7 @@ public class SideMenu extends JPanel {
     private JButton registrationButton;
     private JButton financeButton;
 
-    private final Color defaultBg = new Color(240, 240, 240);
+    private final Color defaultBg = new Color(0, 0, 240);
     private final Color activeBg = new Color(200, 230, 255);
 
     public SideMenu(Router router) {
