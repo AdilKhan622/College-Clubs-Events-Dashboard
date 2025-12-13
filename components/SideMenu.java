@@ -50,7 +50,7 @@ public class SideMenu extends JPanel {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Router.goTo(pageKey, pageTitle);
+                Router.goTo(pageTitle, pageKey);
                 setActive(pageKey);
             }
         });

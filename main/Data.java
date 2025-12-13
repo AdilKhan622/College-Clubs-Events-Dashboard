@@ -11,8 +11,11 @@ public class Data {
         clubs.add("MU Robotics Club");
         clubs.add("Enigma MU");
         clubs.add("8Counts");
+        clubs.add("Blockchain Club");
+        clubs.add("Synolo: The Music Club");
 
-        events.add("Aeon MU");
-        events.add("Airo MU");
+        events.add("Aeon");
+        events.add("Airo");
+        events.add("Aether");
     }
 }

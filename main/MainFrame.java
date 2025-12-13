@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import components.HeaderPanel;
 import components.SideMenu;
+import pages.ClubsPage;
+import pages.EventsPage;
+
 
 public class MainFrame extends JFrame {
     public static final Theme theme = new Theme();
@@ -38,13 +41,21 @@ public class MainFrame extends JFrame {
         sideMenu = new SideMenu(new Router());
         sideMenu.setBackground(theme.bg);
         add(sideMenu, BorderLayout.WEST);
-        Router.goTo("Dashboard", "dashboard");
-
         registerPages();
+
+        cardLayout.show(mainPanel, "Empty");
     }
 
     private void registerPages() {
+        JPanel emptyPage = new JPanel();
+        emptyPage.setBackground(theme.bg);
+        mainPanel.add(emptyPage, "Empty");
 
+        ClubsPage clubsPage = new ClubsPage();
+        mainPanel.add(clubsPage, "Clubs");
+
+        EventsPage eventsPage = new EventsPage();
+        mainPanel.add(eventsPage, "Events");
     }
 
     public HeaderPanel getHeaderPanel() {
