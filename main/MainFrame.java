@@ -7,7 +7,6 @@ import components.SideMenu;
 import pages.ClubsPage;
 import pages.EventsPage;
 
-
 public class MainFrame extends JFrame {
     public static final Theme theme = new Theme();
     public static MainFrame instance;

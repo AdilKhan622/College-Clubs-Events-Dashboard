@@ -16,7 +16,7 @@ public class HeaderPanel extends JPanel {
 
         setLayout(new BorderLayout(MainFrame.theme.padding, 0));
 
-        JLabel appTitleLabel = new JLabel("Mahindra University Clubs & Events Dashboard");
+        JLabel appTitleLabel = new JLabel("Mahindra University Clubs & Events");
         appTitleLabel.setForeground(MainFrame.theme.text);
         appTitleLabel.setFont(MainFrame.theme.title_font);
 

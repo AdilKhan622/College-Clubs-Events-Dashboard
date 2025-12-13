@@ -14,9 +14,9 @@ public class ClubsPage extends JPanel {
 
     private final String[] descriptions = {
             "The robotics and automation club. We focus on making robots and automating things.",
-            "Coding club focused on problem solving and hackathons. We solve the biggest problems using programming.",
+            "The computer science club of MU focused on problem solving, workshops and hackathons.",
             "Dance and choreography club. If you love to dance, join us.",
-            "Crypto, web3 and blockchain is what we do.",
+            "Crypto, Web3, Smart Contracts and Blockchain is what we specialize in.",
             "Music, band and vocal performance club. We do jamming sessions too."
     };
 
@@ -36,7 +36,7 @@ public class ClubsPage extends JPanel {
         container.setBackground(theme.bg);
         container.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
-        for (int i=0;i<5;i++) {
+        for (int i = 0; i < 5; i++) {
             container.add(createClubButton(i));
         }
 
@@ -69,7 +69,6 @@ public class ClubsPage extends JPanel {
         description.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
         description.setVisible(false);
         description.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 
         button.addActionListener(new ActionListener() {
 
