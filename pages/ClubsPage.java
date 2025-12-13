@@ -36,7 +36,7 @@ public class ClubsPage extends JPanel {
         container.setBackground(theme.bg);
         container.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
-        for (int i=0;i<Math.min(5, Data.clubs.size());i++) {
+        for (int i=0;i<5;i++) {
             container.add(createClubButton(i));
         }
 

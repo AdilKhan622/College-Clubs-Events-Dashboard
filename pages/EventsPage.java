@@ -42,7 +42,7 @@ public class EventsPage extends JPanel {
         container.setBackground(theme.bg);
         container.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
-        for (int i=0;i<Math.min(5, Data.events.size()); i++) {
+        for (int i=0;i<3; i++) {
             container.add(createEventButton(i));
         }
 
