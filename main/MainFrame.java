@@ -2,59 +2,67 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+
 import components.HeaderPanel;
 import components.SideMenu;
 import pages.ClubsPage;
 import pages.EventsPage;
+import pages.LoginPage;
+import pages.DashboardPage;
 
 public class MainFrame extends JFrame {
+
     public static final Theme theme = new Theme();
     public static MainFrame instance;
-    public CardLayout cardLayout;
-    public JPanel mainPanel;
 
+    public JPanel mainPanel;
+    public CardLayout cardLayout;
+    public SideMenu sideMenu;
     private HeaderPanel headerPanel;
-    private SideMenu sideMenu;
 
     public MainFrame() {
+
         instance = this;
+
         setTitle("College Clubs & Events Dashboard");
-        setSize(900, 600);
+        setSize(1050, 650);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        setVisible(true);
-
-        getContentPane().setBackground(theme.bg);
-        setVisible(true);
 
         headerPanel = new HeaderPanel();
-        headerPanel.setBackground(theme.primary);
         add(headerPanel, BorderLayout.NORTH);
+
+        sideMenu = new SideMenu(new Router());
+        sideMenu.setVisible(false);
+        add(sideMenu, BorderLayout.WEST);
+        
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
-        mainPanel.setBackground(theme.bg);
         add(mainPanel, BorderLayout.CENTER);
 
-        sideMenu = new SideMenu(new Router());
-        sideMenu.setBackground(theme.bg);
-        add(sideMenu, BorderLayout.WEST);
         registerPages();
 
-        cardLayout.show(mainPanel, "Empty");
+        cardLayout.show(mainPanel, "Login");
+        headerPanel.setPageTitle("Login");
+
+        setVisible(true);
     }
 
     private void registerPages() {
-        JPanel emptyPage = new JPanel();
-        emptyPage.setBackground(theme.bg);
-        mainPanel.add(emptyPage, "Empty");
+        mainPanel.add(new LoginPage(), "Login");
+        mainPanel.add(new DashboardPage(), "Dashboard");
+        mainPanel.add(new ClubsPage(), "Clubs");
+        mainPanel.add(new EventsPage(), "Events");
 
-        ClubsPage clubsPage = new ClubsPage();
-        mainPanel.add(clubsPage, "Clubs");
+        JPanel regPage = new JPanel();
+        regPage.setBackground(theme.bg);
+        mainPanel.add(regPage, "Registrations");
 
-        EventsPage eventsPage = new EventsPage();
-        mainPanel.add(eventsPage, "Events");
+        JPanel finPage = new JPanel();
+        finPage.setBackground(theme.bg);
+        mainPanel.add(finPage, "Finance");
     }
 
     public HeaderPanel getHeaderPanel() {

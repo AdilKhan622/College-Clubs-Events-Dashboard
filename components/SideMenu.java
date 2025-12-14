@@ -1,92 +1,89 @@
 package components;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+import main.MainFrame;
 import main.Router;
 
 public class SideMenu extends JPanel {
 
-    private final Router router;
-
-    private JButton dashboardButton;
-    private JButton clubsButton;
-    private JButton eventsButton;
-    private JButton registrationButton;
-    private JButton financeButton;
-
-    private final Color defaultBg = new Color(0, 0, 240);
-    private final Color activeBg = new Color(200, 230, 255);
-
     public SideMenu(Router router) {
-        this.router = router;
 
         setPreferredSize(new Dimension(200, 0));
-        setLayout(new GridLayout(0, 1, 0, 8));
-        setBorder(BorderFactory.createEmptyBorder(16, 8, 16, 8));
-        setBackground(defaultBg);
+        setLayout(new GridLayout(6, 1, 10, 10));
 
-        dashboardButton = createMenuButton("Dashboard", "dashboard", "Dashboard");
-        clubsButton = createMenuButton("Clubs", "clubs", "Clubs");
-        eventsButton = createMenuButton("Events", "events", "Events");
-        registrationButton = createMenuButton("Registrations", "registrations", "Registrations");
-        financeButton = createMenuButton("Finance", "finance", "Finance");
+        JButton dashboard = createButton("Dashboard");
+        JButton clubs = createButton("Clubs");
+        JButton events = createButton("Events");
+        JButton reg = createButton("Registrations");
+        JButton finance = createButton("Finance");
 
-        add(dashboardButton);
-        add(clubsButton);
-        add(eventsButton);
-        add(registrationButton);
-        add(financeButton);
+        add(dashboard);
+        add(clubs);
+        add(events);
+        add(reg);
+        add(finance);
 
-        setActive("dashboard");
+        dashboard.addActionListener(e -> {
+            Router.goTo("Dashboard", "Dashboard");
+            MainFrame.instance.getHeaderPanel().setPageTitle("Dashboard");
+        });
+
+        clubs.addActionListener(e -> {
+            Router.goTo("Clubs", "Clubs");
+            MainFrame.instance.getHeaderPanel().setPageTitle("Clubs");
+        });
+
+        events.addActionListener(e -> {
+            Router.goTo("Events", "Events");
+            MainFrame.instance.getHeaderPanel().setPageTitle("Events");
+        });
+
+        reg.addActionListener(e -> {
+            Router.goTo("Registrations", "Registrations");
+            MainFrame.instance.getHeaderPanel().setPageTitle("Registrations");
+        });
+
+        finance.addActionListener(e -> {
+            Router.goTo("Finance", "Finance");
+            MainFrame.instance.getHeaderPanel().setPageTitle("Finance");
+        });
     }
 
-    private JButton createMenuButton(String text, String pageKey, String pageTitle) {
+    private JButton createButton(String text) {
+
         JButton btn = new JButton(text);
         btn.setFocusPainted(false);
-        btn.setHorizontalAlignment(SwingConstants.LEFT);
-        btn.setBackground(defaultBg);
+        btn.setOpaque(false);
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btn.setContentAreaFilled(false);
+        btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Router.goTo(pageTitle, pageKey);
-                setActive(pageKey);
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn.setForeground(Color.YELLOW);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn.setForeground(Color.WHITE);
             }
         });
 
         return btn;
     }
 
-    public void setActive(String pageKey) {
-        resetBackgrounds();
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-        switch (pageKey) {
-            case "dashboard":
-                dashboardButton.setBackground(activeBg);
-                break;
-            case "clubs":
-                clubsButton.setBackground(activeBg);
-                break;
-            case "events":
-                eventsButton.setBackground(activeBg);
-                break;
-            case "registrations":
-                registrationButton.setBackground(activeBg);
-                break;
-            case "finance":
-                financeButton.setBackground(activeBg);
-                break;
-            default:
-                break;
-        }
-    }
+        Graphics2D g2 = (Graphics2D) g;
 
-    private void resetBackgrounds() {
-        dashboardButton.setBackground(defaultBg);
-        clubsButton.setBackground(defaultBg);
-        eventsButton.setBackground(defaultBg);
-        registrationButton.setBackground(defaultBg);
-        financeButton.setBackground(defaultBg);
+        GradientPaint gp = new GradientPaint(
+                0, 0, MainFrame.theme.sidebarGradientTop,
+                0, getHeight(), MainFrame.theme.sidebarGradientBottom
+        );
+
+        g2.setPaint(gp);
+        g2.fillRect(0, 0, getWidth(), getHeight());
     }
 }

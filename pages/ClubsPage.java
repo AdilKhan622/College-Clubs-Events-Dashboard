@@ -5,8 +5,7 @@ import main.Theme;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class ClubsPage extends JPanel {
 
@@ -26,49 +25,82 @@ public class ClubsPage extends JPanel {
         setBackground(theme.bg);
 
         JLabel title = new JLabel("Clubs", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setFont(theme.bigTitle);
         title.setForeground(theme.text);
         title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+
         add(title, BorderLayout.NORTH);
 
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.setBackground(theme.bg);
-        container.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        container.setBorder(BorderFactory.createEmptyBorder(20, 80, 20, 80));
 
-        for (int i = 0; i < 5; i++) {
-            container.add(createClubButton(i));
+        for (int i = 0; i < Data.clubs.size(); i++) {
+            container.add(createClubCard(i));
+            container.add(Box.createRigidArea(new Dimension(0, 15)));
         }
 
-        JScrollPane scrollPane = new JScrollPane(container);
-        scrollPane.setBorder(null);
-        add(scrollPane, BorderLayout.CENTER);
+        JScrollPane scroll = new JScrollPane(container);
+        scroll.setBorder(null);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+
+        add(scroll, BorderLayout.CENTER);
     }
 
-    private JPanel createClubButton(int index) {
+    private JPanel createClubCard(int index) {
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(theme.bg);
-        panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+        JPanel card = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        JButton button = new JButton(Data.clubs.get(index) + "   ▼");
+                // Card background
+                g2.setColor(new Color(135, 206, 250));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+            }
+        };
+
+        card.setLayout(new BorderLayout());
+        card.setOpaque(false);
+        card.setPreferredSize(new Dimension(700, 55));
+
+        JButton button = new JButton(Data.clubs.get(index) + "  ▼");
         button.setFont(theme.text_font);
         button.setForeground(Color.BLACK);
-        button.setBackground(theme.primary);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         button.setFocusPainted(false);
-        button.setRolloverEnabled(false);
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(true);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        button.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JLabel description = new JLabel(descriptions[index], SwingConstants.CENTER);
-        description.setFont(new Font("Arial", Font.PLAIN, 12));
-        description.setForeground(theme.text);
-        description.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
-        description.setVisible(false);
-        description.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Hover effect
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setForeground(new Color(0, 0, 80));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setForeground(Color.BLACK);
+            }
+        });
+
+        JLabel desc = new JLabel("<html><p style='width:650px'>" + descriptions[index] + "</p></html>");
+        desc.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        desc.setForeground(theme.text);
+        desc.setBorder(BorderFactory.createEmptyBorder(10, 25, 15, 25));
+        desc.setVisible(false);
+
+        JPanel wrapper = new JPanel();
+        wrapper.setLayout(new BorderLayout());
+        wrapper.setBackground(theme.bg);
+        wrapper.add(desc, BorderLayout.CENTER);
+
+        card.add(button, BorderLayout.NORTH);
+        card.add(wrapper, BorderLayout.CENTER);
 
         button.addActionListener(new ActionListener() {
 
@@ -77,22 +109,13 @@ public class ClubsPage extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 expanded = !expanded;
-                description.setVisible(expanded);
-
-                if (expanded) {
-                    button.setText(Data.clubs.get(index) + "   ▲");
-                } else {
-                    button.setText(Data.clubs.get(index) + "   ▼");
-                }
-
+                desc.setVisible(expanded);
+                button.setText(Data.clubs.get(index) + (expanded ? "  ▲" : "  ▼"));
                 revalidate();
                 repaint();
             }
         });
 
-        panel.add(button);
-        panel.add(description);
-
-        return panel;
+        return card;
     }
 }
